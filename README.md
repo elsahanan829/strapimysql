@@ -193,10 +193,12 @@ With this we will have the environment variables ready.
 Now we will configure the file `./Dockerfile` in the root of the project with the following content.
 
 ```dockerfile
-FROM node:14.15.4
+FROM node:14.15.4-alpine
 COPY [".", "/usr/src/"]
 WORKDIR /usr/src/
+ENV NODE_ENV=production
 RUN npm install
+RUN npm run build
 CMD [ "npm", "start" ]
 EXPOSE 1337
 ```
@@ -205,10 +207,14 @@ We also need the `.dockerignore` in the root of the project with the following c
 
 ```
 .git
+.cache
+.github
+build
+docs
+node_modules
 .env
 Dockerfile
-.tmp
-.cache
+
 ```
 
 Let's test the image by building and running a container with the environment variables for production. We will use the MongoDB Atlas credentials. Check out the prerequisites above.
@@ -246,6 +252,7 @@ services:
     build: .
     command: npm run develop
     environment:
+      NODE_ENV: development
       DATABASE_CLIENT: mongo
       DATABASE_NAME: strapi
       DATABASE_HOST: mongo
