@@ -1,0 +1,29 @@
+version: '3'
+services:
+  strapi:
+    build: .
+    command: npm run develop
+    environment:
+      NODE_ENV: development
+      DATABASE_CLIENT: mongo
+      DATABASE_NAME: strapi
+      DATABASE_HOST: mongo
+      DATABASE_PORT: 27017
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi
+      ADMIN_JWT_SECRET: token
+    volumes:
+      - .:/srv/app
+    ports:
+      - '1337:1337'
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.2.11-bionic
+    environment:
+      MONGO_INITDB_DATABASE: strapi
+      MONGO_INITDB_ROOT_USERNAME: strapi
+      MONGO_INITDB_ROOT_PASSWORD: strapi
+    volumes:
+      - ./.tmp/data:/data/db
