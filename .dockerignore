@@ -1,6 +1,7 @@
 .git
 .cache
 .github
+.tmp
 build
 docs
 node_modules
