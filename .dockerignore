@@ -1,0 +1,8 @@
+.git
+.cache
+.github
+build
+docs
+node_modules
+.env
+Dockerfile
