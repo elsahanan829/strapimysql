@@ -1,0 +1,278 @@
+<p align="center">
+  <img src="./images/strapi-logo.png" width="260px" />
+</p>
+<br><br>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Node%20js-14.15.4-3c730f?style=for-the-badge&logo=node.js&labelColor=20232a" />
+  <img src="https://img.shields.io/badge/strapi-3.4.5-35408a?style=for-the-badge&logo=strapi&labelColor=20232a" />
+  <img src="https://img.shields.io/badge/docker-1.0.0-2496ED?style=for-the-badge&logo=docker&labelColor=20232a" />
+</p>
+
+---
+
+<h3 align="center">Guía para usar Strapi + MongoDB Atlas + Docker + Docker Compose.</h3>
+<br>
+<p align="center">
+  <img src="./images/strapi-cover.png" />
+</p>
+
+<br><br>
+
+## Prerrequisitos
+
+Primero vamos a MongoDB Atlas, iniciamos sesión y desde el menú principal seleccionamos un proyecto. Si no tienes ningún proyecto, crea uno.
+![MongoDB Atlas - Tutorial 1](./images/1-mongodb-atlas-tutorial.png?raw=true)
+
+Despues vamos a la sección **Database Access**.
+![MongoDB Atlas - Tutorial 2](./images/2-mongodb-atlas-tutorial.png?raw=true)
+
+Damos clic en **Add New Database User**
+![MongoDB Atlas - Tutorial 3](./images/3-mongodb-atlas-tutorial.png?raw=true)
+
+Creamos un nuevo usuario con el nombre y la contraseña. Debemos asegurarnos de asignarle los permisos necesarios para poder leer y escribir en la base de datos. Al terminar damos clic en **Add User**
+![MongoDB Atlas - Tutorial 4](./images/4-mongodb-atlas-tutorial.png?raw=true)
+
+Volvemos a la seccion **Clusters** y damos clic en el botón **CONNECT**
+![MongoDB Atlas - Tutorial 5](./images/5-mongodb-atlas-tutorial.png?raw=true)
+
+Seleccionamos **Connect your application**
+![MongoDB Atlas - Tutorial 6](./images/6-mongodb-atlas-tutorial.png?raw=true)
+
+Configuramos el primer campo en **Node js** con la versión **3.0 or later** y copiamos el código que nos entrega abajo.
+![MongoDB Atlas - Tutorial 7](./images/7-mongodb-atlas-tutorial.png?raw=true)
+
+El siguiente código nos servirá para configurar strapi con MongoDB Atlas. Asegúrate de usar el tuyo, este es solo de ejemplo.
+
+```bash
+mongodb+srv://strapi:<password>@main.hfhwg.mongodb.net/<dbname>?retryWrites=true&w=majority
+```
+
+El código anterior contiene los siguientes campos:
+
+```bash
+conection-type: mongodb+srv
+host: main.hfhwg.mongodb.net
+dbname: <dbname>
+username: strapi
+password: <password>
+```
+
+Identifica los mismos campos pero con tu codigo para que puedas seguir con el tutorial.
+
+Para el campo **dbname** tu mismo especificaras cual es la base de datos a la que te quieres conectar y para el campo **password** será la contraseña que le colocaste al usuario que creaste. **Sigue el tutorial para que veas a detalle como se utilizan estos campos**.
+
+## 1 - Inicializar el proyecto
+
+Ejecuta el siguiente comando para inicializar el proyecto. Cambia **my-project** por el nombre real de tu proyecto.
+
+```bash
+npx create-strapi-app my-project
+```
+
+Despues selecciona la opción **Custom (manual settings)**
+
+```bash
+? Choose your installation type
+ Quickstart (recommended)
+> Custom (manual settings)
+```
+
+Ahora selecciona **mongo**
+
+```bash
+? Choose your default database client
+ sqlite
+ postgres
+ mysql
+> mongo
+```
+
+Inserta el nombre de la base de datos. Si no existe se creara una nueva con el nombre que proporciones.
+
+```bash
+? Database name: strapi
+```
+
+El host lo encontramos en el codigo que obtuvimos en MongoDB Atlas (**Mira los prerequisitos de arriba**). Asegurate de colocar el tuyo, el siguiente es de ejemplo.
+
+```bash
+? Host: main.hfhwg.mongodb.net
+```
+
+Colocamos **true** ya que se nos indico en el codigo de MongoDB Atlas que el **conection-type** es **mongodb+srv**
+
+```bash
+? +srv connection: true
+```
+
+El puerto por defecto en mongodb es **27017**
+
+```bash
+? Port (It will be ignored if you enable +srv): 27017
+```
+
+Ahora colocaremos el nombre del usuario que creamos en MongoDB Atlas. Asegurate de usar el tuyo.
+
+```bash
+? Username: strapi
+```
+
+Despues colocamos la contraseña para el usuario que usamos anteriormente.
+
+```bash
+? Password: ****
+```
+
+Aqui solo presionaremos enter ya que seleccionaremos la segunda opcion que es blank
+
+```bash
+? Authentication database (Maybe "admin" or blank):
+```
+
+Para finalizar pondremos **y** para habilitar una la conexion mediante ssl
+
+```bash
+? Enable SSL connection: y
+```
+
+Listo. Esperamos a que se termine de instalar el proyecto y podremos acceder a la siguiente url donde estara el panel de strapi.
+
+[http://localhost:1337](http://localhost:1337)
+
+## 2 - Variables de entorno
+
+Debemos configurar las variables de entorno para poder usarlas en docker y docker compose.
+
+Primero vamos a editar el archivo `./config/database.js` donde pondremos las variables de entorno con sus valores por defecto.
+
+```javascript
+module.exports = ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'mongoose',
+      settings: {
+        host: env('DATABASE_HOST', '127.0.0.1'),
+        srv: env.bool('DATABASE_SRV', false),
+        port: env.int('DATABASE_PORT', 27017),
+        database: env('DATABASE_NAME', 'strapi'),
+        username: env('DATABASE_USERNAME', 'user'),
+        password: env('DATABASE_PASSWORD', 'password'),
+      },
+      options: {
+        authenticationDatabase: env('AUTHENTICATION_DATABASE', null),
+        ssl: env.bool('DATABASE_SSL', false),
+      },
+    },
+  },
+})
+```
+
+Despues en el archivo `./config/server.js` eliminamos el token que está en la variable ADMIN_JWT_SECRET. Asegúrate de guardarlo en un lugar seguro, lo necesitarás para poder autenticarte. ¡No lo pierdas!.
+
+```javascript
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  admin: {
+    auth: {
+      secret: env('ADMIN_JWT_SECRET'),
+    },
+  },
+})
+```
+
+Con esto tendremos listas las variables de entorno.
+
+## 3 - Docker y Docker Compose
+
+Ahora configuraremos el archivo `./Dockerfile` en la raiz del proyecto con el siguiente contenido.
+
+```dockerfile
+FROM node:14.15.4
+COPY [".", "/usr/src/"]
+WORKDIR /usr/src/
+RUN npm install
+CMD [ "npm", "start" ]
+EXPOSE 1337
+```
+
+También necesitamos él `.dockerignore` en la raiz del proyecto con el siguiente contenido.
+
+```
+.git
+.env
+Dockerfile
+.tmp
+.cache
+```
+
+Probemos la imagen construyéndola y corriendo un contenedor con las variables de entorno para producción. Usaremos las credenciales de MongoDB Atlas. Revisa los prerrequisitos arriba.
+
+```bash
+# shell
+docker build -t my-strapi-image .
+```
+
+Sustituye los valores por tus credenciales de MongoDB Atlas y coloca el token que guardaste anteriormente en ADMIN_JWT_SECRET.
+
+```bash
+# shell
+docker run --name my-app -p 1337:1337 \
+-e DATABASE_HOST=my-host \
+-e DATABASE_SRV=true \
+-e DATABASE_NAME=my-db \
+-e DATABASE_USERNAME=my-username \
+-e DATABASE_PASSWORD=my-pass \
+-e DATABASE_SSL=true \
+-e ADMIN_JWT_SECRET=token \
+my-strapi-image
+```
+
+Cuando termine de correr el contenedor, acceder a la url [http://localhost:1337](http://localhost:1337). Si puedes ver e ingresar a strapi entonces todo va bien.
+
+Ahora deten el contenedor y configuremos docker-compose.
+
+Seguimos con el archivo `./docker-compose.yml` ubicado en la raiz del proyecto con el siguiente contenido. La única variable que tendrás que cambiar es ADMIN_JWT_SECRET por el token que guardaste anteriormente.
+
+```yml
+version: '3'
+services:
+  strapi:
+    build: .
+    command: npm run develop
+    environment:
+      DATABASE_CLIENT: mongo
+      DATABASE_NAME: strapi
+      DATABASE_HOST: mongo
+      DATABASE_PORT: 27017
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi
+      ADMIN_JWT_SECRET: token
+    volumes:
+      - .:/srv/app
+    ports:
+      - '1337:1337'
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.2.11-bionic
+    environment:
+      MONGO_INITDB_DATABASE: strapi
+      MONGO_INITDB_ROOT_USERNAME: strapi
+      MONGO_INITDB_ROOT_PASSWORD: strapi
+    volumes:
+      - ./.tmp/data:/data/db
+```
+
+Ahora probemos docker compose con el siguiente comando.
+
+```bash
+docker-compose up
+```
+
+Espera a que se construya la imagen y se corran ambos contenedores. Cuando terminen accede a la url [http://localhost:1337](http://localhost:1337)
+
+Con los archivos anteriores ya configurados tendremos todo listo para poder trabajar en desarrollo con docker compose y en producción con la imagen declarada en el Dockerfile.
