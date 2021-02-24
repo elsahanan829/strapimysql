@@ -35,10 +35,9 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-      - name: Sync
-        uses: ms-jpq/sync-dockerhub-readme@v1
+      - name: Dockerhub Description
+        uses: peter-evans/dockerhub-description@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: luisfalconmx/strapi
-          readme: './README.md'
