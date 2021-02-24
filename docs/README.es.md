@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="./images/strapi-logo.png" width="260px" />
+  <img src="./images/strapi-logo.svg" width="260px" />
 </p>
 <br><br>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Node%20js-14.15.4-3c730f?style=for-the-badge&logo=node.js&labelColor=20232a" />
   <img src="https://img.shields.io/badge/strapi-3.4.5-35408a?style=for-the-badge&logo=strapi&labelColor=20232a" />
-  <img src="https://img.shields.io/badge/docker-1.0.0-2496ED?style=for-the-badge&logo=docker&labelColor=20232a" />
+  <img src="https://img.shields.io/badge/dockerhub-1.1.1-2496ED?style=for-the-badge&logo=docker&labelColor=20232a" />
 </p>
 
 ---
@@ -18,6 +18,48 @@
 </p>
 
 <br><br>
+
+# Empezando
+
+La imagen de este proyecto utiliza strapi en su base para funcionar. Se complementa con una base de datos autoadministrada en mongodb atlas. Puede ver los requisitos de este documento para obtener las credenciales de las variables de entorno.
+
+#### Correr el proyecto con la imagen de dockerhub
+
+```
+docker run --name strapi -p 1337:1337 \
+-e DATABASE_HOST= \
+-e DATABASE_SRV=true \
+-e DATABASE_NAME= \
+-e DATABASE_USERNAME= \
+-e DATABASE_PASSWORD= \
+-e DATABASE_SSL=true \
+-e ADMIN_JWT_SECRET= \
+-e AWS_ACCESS_KEY_ID= \
+-e AWS_ACCESS_SECRET= \
+-e AWS_REGION= \
+-e AWS_ENDPOINT= \
+-e AWS_BUCKET= \
+luisfalconmx/strapi:latest
+```
+
+#### Correr el proyecto con la imagen de Github Package Registry
+
+```
+docker run --name strapi -p 1337:1337 \
+-e DATABASE_HOST= \
+-e DATABASE_SRV=true \
+-e DATABASE_NAME= \
+-e DATABASE_USERNAME= \
+-e DATABASE_PASSWORD= \
+-e DATABASE_SSL=true \
+-e ADMIN_JWT_SECRET= \
+-e AWS_ACCESS_KEY_ID= \
+-e AWS_ACCESS_SECRET= \
+-e AWS_REGION= \
+-e AWS_ENDPOINT= \
+-e AWS_BUCKET= \
+ghcr.io/luisfalconmx/strapi:latest
+```
 
 ## Prerrequisitos
 
@@ -283,3 +325,60 @@ docker-compose up
 Espera a que se construya la imagen y se corran ambos contenedores. Cuando terminen accede a la url [http://localhost:1337](http://localhost:1337)
 
 Con los archivos anteriores ya configurados tendremos todo listo para poder trabajar en desarrollo con docker compose y en producción con la imagen declarada en el Dockerfile.
+
+## Obtener las credenciales de AWS con Digitalocean Spaces
+
+Las siguientes variables de entorno que necesitamos para correr la imagen las obtendremos con el microservicio digitalocean spaces. Para lograr esto primero vamos a nuestro panel de digitalocean, damos clic en el boton verde que dice create y seleccionamos Spaces.
+
+![Digitalocean crear un space tutorial 1](./images/do-space-01.png)
+
+<br>
+Seleccionamos la region del datacenter de nuestra preferencia.
+
+![Digitalocean crear un space tutorial 2](./images/do-space-02.png)
+
+<br>
+Habilitaremos el Content Delivery Network para que nuestros archivos estaticos sean servidos desde multiples servidores. Para este paso es necesario que agreges tu dominio a digitalocean y lo selecciones en el campo "Use a custom subdomain". Podrás usar directamente el dominio o si especificas un subdominio digitalocean lo creara por ti.
+
+En la opción "Allow file listing?" es recomendable seleccionar "Restrict File Listing" para que solo las aplicaciones de nuestra propiedad puedan listar los contenidos del space.
+
+![Digitalocean crear un space tutorial 3](./images/do-space-03.png)
+
+<br>
+
+Para finalizar simplemente le damos un nombre a nuestro space. Seleccionamos el proyecto y damos clic en el boton de crear. (me sale el mensaje en rojo por que ya lo tenia creado)
+
+![Digitalocean crear un space tutorial 4](./images/do-space-04.png)
+
+<br>
+
+### AWS_ACCESS_KEY_ID y AWS_ACCESS_SECRET
+
+Para obtener el valor de esta variable vamos a **Account > API** en el menu de la izquierda.
+
+![Digitalocean crear un space tutorial 11](./images/do-space-11.png)
+
+Despues damos clic en **Generate New Key**
+![Digitalocean crear un space tutorial 12](./images/do-space-12.png)
+
+Y obtendremos los dos valores. El primero es el key y el segundo es el secret.
+
+![Digitalocean crear un space tutorial 12](./images/do-space-13.png)
+
+### AWS_REGION
+
+Para obtener la region simplemente vamos a nuestro en **Settings > Endpoint** y nos mostrara la region. Solo toma lo que hay antes de .digitaloceanspaces.com.
+
+![Digitalocean crear un space tutorial 12](./images/do-space-15.png)
+
+### AWS_ENDPOINT
+
+Ahora copia todo el endpoint que como muestra la imagen y pegalo en la variable de entorno.
+
+![Digitalocean crear un space tutorial 9](./images/do-space-07.png)
+
+### AWS_BUCKET
+
+Por ultimo necesitamos el bucket que es el nombre de nuestro space.
+
+![Digitalocean crear un space tutorial 9](./images/do-space-08.png)
