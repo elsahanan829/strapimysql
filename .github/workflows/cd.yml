@@ -32,7 +32,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Build and push to Dockerhub
+      - name: Build and Push
         id: dockerhub_build
         uses: docker/build-push-action@v2
         with:
@@ -45,10 +45,3 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-
-      - name: Dockerhub Description
-        uses: peter-evans/dockerhub-description@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: luisfalconmx/strapi
