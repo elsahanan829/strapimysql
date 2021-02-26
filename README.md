@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/Node%20js-14.15.4-3c730f?style=for-the-badge&logo=node.js&labelColor=20232a" />
   <img src="https://img.shields.io/badge/strapi-3.4.5-35408a?style=for-the-badge&logo=strapi&labelColor=20232a" />
   <a href="https://hub.docker.com/r/luisfalconmx/strapi">
-    <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/luisfalconmx/a5061f5a6d416bf2228bedc05f8dfa1b/raw/b3c6c29891206ee0596bf905f3b61228a75b78d4/badge.json" />
+    <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/luisfalconmx/a5061f5a6d416bf2228bedc05f8dfa1b/raw/ef3c0fd856753941814e8c1c565691a8cfeff2b9/docker-badge.json" />
   </a>
   <img src="https://img.shields.io/badge/license-MIT-orange?style=for-the-badge&logo=github&labelColor=20232a" />
 </p>
