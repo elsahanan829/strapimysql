@@ -1,4 +1,4 @@
-# Docker and Docker Compose
+# Configure Docker and Docker Compose
 
 Now we will configure the file `./Dockerfile` in the root of the project with the following content.
 
