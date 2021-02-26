@@ -11,7 +11,9 @@
   <a href="https://hub.docker.com/r/luisfalconmx/strapi">
     <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/luisfalconmx/a5061f5a6d416bf2228bedc05f8dfa1b/raw/b3c6c29891206ee0596bf905f3b61228a75b78d4/badge.json" />
   </a>
-  <img src="https://img.shields.io/badge/license-MIT-orange?style=for-the-badge&logo=github&labelColor=20232a" />
+  <a href="https://github.com/luisfalconmx/strapi/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-orange?style=for-the-badge&logo=github&labelColor=20232a" />
+  </a>
 </p>
 
 <br>
@@ -126,11 +128,11 @@ In order to use the image of this project, the following requirements need to be
 
 ## Guides
 
-- [Get MongoDB Atlas Credentials]()
-- [Get AWS S3 credentials]()
-- [Initialize a strapi project]()
-- [Configure Environment Variables]()
-- [Configure Docker and Docker Compose]()
+- [Get MongoDB Atlas Credentials](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/mongodb-atlas.md)
+- [Get AWS S3 credentials](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/aws-s3.md)
+- [Initialize a strapi project](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/start-project.md)
+- [Configure Environment Variables](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/variables.md)
+- [Configure Docker and Docker Compose](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/docker.md)
 
 <br>
 
@@ -146,5 +148,5 @@ The format is based on Keep a Changelog, and this project adheres to Semantic Ve
 
 ## License and Code of Conduct
 
-- [MIT License]()
-- [Code of Conduct]()
+- [MIT License](https://github.com/luisfalconmx/strapi/blob/main/LICENSE)
+- [Code of Conduct](https://github.com/luisfalconmx/strapi/blob/main/CODE_OF_CONDUCT.md)
