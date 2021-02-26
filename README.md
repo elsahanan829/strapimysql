@@ -9,8 +9,9 @@
   <img src="https://img.shields.io/badge/Node%20js-14.15.4-3c730f?style=for-the-badge&logo=node.js&labelColor=20232a" />
   <img src="https://img.shields.io/badge/strapi-3.4.5-35408a?style=for-the-badge&logo=strapi&labelColor=20232a" />
   <a href="https://hub.docker.com/r/luisfalconmx/strapi">
-    <img src="https://img.shields.io/badge/dockerhub-1.1.1-2496ED?style=for-the-badge&logo=docker&labelColor=20232a" />
+    <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/luisfalconmx/a5061f5a6d416bf2228bedc05f8dfa1b/raw/b3c6c29891206ee0596bf905f3b61228a75b78d4/badge.json" />
   </a>
+  <img src="https://img.shields.io/badge/license-MIT-orange?style=for-the-badge&logo=github&labelColor=20232a" />
 </p>
 
 <br>
@@ -24,6 +25,8 @@
 ## Getting Started
 
 The image in this project uses strapi in its base to function. It is complemented by a self-administered database in mongodb atlas. You can view the requirements in this document to obtain the credentials of the environment variables.
+
+<br>
 
 ### Run the project with the Dockerhub Image
 
@@ -43,6 +46,8 @@ docker run --name strapi -p 1337:1337 \
 luisfalconmx/strapi:latest
 ```
 
+<br>
+
 ### Run the project with the image from Github Package Registry
 
 ```
@@ -60,6 +65,8 @@ docker run --name strapi -p 1337:1337 \
 -e AWS_BUCKET= \
 ghcr.io/luisfalconmx/strapi:latest
 ```
+
+<br>
 
 ### Run the project with Docker Compose
 
