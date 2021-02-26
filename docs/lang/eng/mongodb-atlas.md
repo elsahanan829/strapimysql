@@ -1,4 +1,4 @@
-# Configure MongoDB Atlas
+# Get MongoDB Atlas Credentials
 
 First we go to MongoDB Atlas, we log in and from the main menu we select a project. If you don't have a project, create one.
 

@@ -1,4 +1,4 @@
-## Get AWS credentials with Digitalocean Spaces
+## Get AWS S3 credentials
 
 The following environment variables that we need to run the image will be obtained with the digitalocean spaces microservice. To achieve this, first we go to our digitalocean panel, click on the green button that says create and select Spaces.
 

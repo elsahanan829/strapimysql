@@ -1,4 +1,4 @@
-# Initialize the project
+# Initialize a strapi the project
 
 Run the following command to initialize the project. Change **my-project** to the actual name of your project.
 

@@ -3,15 +3,8 @@ services:
   strapi:
     build: .
     command: npm run develop
-    environment:
-      NODE_ENV: development
-      DATABASE_CLIENT: mongo
-      DATABASE_NAME: strapi
-      DATABASE_HOST: mongo
-      DATABASE_PORT: 27017
-      DATABASE_USERNAME: strapi
-      DATABASE_PASSWORD: strapi
-      ADMIN_JWT_SECRET: token
+    env_file:
+      - .env
     volumes:
       - .:/srv/app
       - node_modules
