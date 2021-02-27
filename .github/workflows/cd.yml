@@ -3,6 +3,9 @@ name: Continuos Delivery
 on:
   release:
     types: [published]
+    paths:
+      - README.md
+      - .github/workflows/cd.yml
 
 jobs:
   build:
@@ -57,3 +60,23 @@ jobs:
           color: 2496ED
           namedLogo: docker
           style: for-the-badge
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: luisfalconmx/strapi
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
