@@ -1,12 +1,11 @@
 name: Continuos Delivery
 
 on:
-  push:
-    tags:
-      - v*
+  release:
+    types: [published]
 
 jobs:
-  build:
+  Build:
     name: Build
     runs-on: ubuntu-20.04
     steps:
@@ -33,7 +32,7 @@ jobs:
           password: ${{ secrets.CR_PAT }}
 
       - name: Build and Push
-        id: dockerhub_build
+        id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -58,3 +57,16 @@ jobs:
           color: 2496ED
           namedLogo: docker
           style: for-the-badge
+
+  deploy:
+    name: Deploy
+    needs: docker
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
