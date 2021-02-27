@@ -3,6 +3,9 @@ name: Continuos Delivery
 on:
   release:
     types: [published]
+    paths:
+      - README.md
+      - .github/workflows/dockerhub-description.yml
 
 jobs:
   Build:
@@ -29,7 +32,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
+          password: ${{ secrets.REPOSITORY_TOKEN }}
 
       - name: Build and Push
         id: docker_build
@@ -48,7 +51,7 @@ jobs:
       - name: Set Badge Version
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
-          auth: ${{ secrets.GIST_SECRET }}
+          auth: ${{ secrets.REPOSITORY_TOKEN }}
           gistID: a5061f5a6d416bf2228bedc05f8dfa1b
           filename: docker-badge.json
           label: Dockerhub
@@ -57,6 +60,13 @@ jobs:
           color: 2496ED
           namedLogo: docker
           style: for-the-badge
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: luisfalconmx/strapi
 
   deploy:
     name: Deploy
