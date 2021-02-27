@@ -5,7 +5,7 @@ on:
     types: [published]
     paths:
       - README.md
-      - .github/workflows/dockerhub-description.yml
+      - .github/workflows/cd.yml
 
 jobs:
   Build:
