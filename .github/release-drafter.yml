@@ -57,3 +57,5 @@ template: |
   Guides: https://github.com/luisfalconmx/strapi#guides
 
   ## New in Strapi v$RESOLVED_VERSION
+
+  $CHANGES
