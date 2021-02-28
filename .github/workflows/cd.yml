@@ -3,10 +3,6 @@ name: Continuos Delivery
 on:
   release:
     types: [published]
-  push:
-    paths:
-      - README.md
-      - .github/workflows/cd.yml
 
 jobs:
   build:
@@ -62,12 +58,19 @@ jobs:
           namedLogo: docker
           style: for-the-badge
 
-      - name: Docker Hub Description
-        uses: peter-evans/dockerhub-description@v2
+      - name: git checkout
+        uses: actions/checkout@v2
+
+      - name: push README to Dockerhub
+        uses: christian-korneck/update-container-description-action@v1
+        env:
+          DOCKER_USER: luisfalconmx
+          DOCKER_PASS: ${{ secrets.DOCKERHUB_PASSWORD }}
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: luisfalconmx/strapi
+          destination_container_repo: luisfalconmx/strapi
+          provider: dockerhub
+          short_description: 'A strapi project with support for Mongo DB Atlas, Docker, Docker Compose and AWS S3 Bucket.'
+          readme_file: 'README.md'
 
   deploy:
     name: Deploy
