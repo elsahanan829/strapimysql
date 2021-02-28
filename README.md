@@ -19,7 +19,7 @@
 <br>
 
 <p align="center">
-  <img src="./docs/images/strapi-cover.png" />
+  <img src="https://raw.githubusercontent.com/luisfalconmx/strapi/main/docs/images/strapi-cover.png" />
 </p>
 
 <br><br>
@@ -128,21 +128,17 @@ In order to use the image of this project, the following requirements need to be
 
 ## Guides
 
-- [Get MongoDB Atlas Credentials](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/mongodb-atlas.md)
-- [Get AWS S3 credentials](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/aws-s3.md)
-- [Initialize a strapi project](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/start-project.md)
-- [Configure Environment Variables](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/variables.md)
-- [Configure Docker and Docker Compose](https://github.com/luisfalconmx/strapi/blob/main/docs/lang/eng/docker.md)
+- [Get MongoDB Atlas Credentials](https://luisfalconmx.github.io/strapi/lang/eng/mongodb-atlas)
+- [Get AWS S3 credentials](https://luisfalconmx.github.io/strapi/lang/eng/aws-s3)
+- [Initialize a strapi project](https://luisfalconmx.github.io/strapi/lang/eng/start-project)
+- [Configure Environment Variables](https://luisfalconmx.github.io/strapi/lang/eng/variables)
+- [Configure Docker and Docker Compose](https://luisfalconmx.github.io/strapi/lang/eng/docker)
 
 <br>
 
-## Changelog
+## Releases
 
-All notable changes to this project will be documented in this file.
-
-The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
-
-[CHANGELOG.md]()
+List of published versions: https://github.com/luisfalconmx/strapi/releases
 
 <br>
 
