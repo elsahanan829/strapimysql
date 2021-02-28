@@ -3,9 +3,10 @@ name: Continuos Delivery
 on:
   release:
     types: [published]
-  paths:
-    - README.md
-    - .github/workflows/cd.yml
+  push:
+    paths:
+      - README.md
+      - .github/workflows/cd.yml
 
 jobs:
   build:
