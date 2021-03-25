@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "projects",
+  "collectionName": "themes",
   "info": {
-    "name": "projects",
-    "description": ""
+    "name": "Theme"
   },
   "options": {
     "increments": true,
@@ -14,20 +13,8 @@
     "title": {
       "type": "string"
     },
-    "description": {
-      "type": "text"
-    },
     "url": {
       "type": "string"
-    },
-    "repository": {
-      "type": "string"
-    },
-    "date": {
-      "type": "date"
-    },
-    "featured": {
-      "type": "boolean"
     },
     "cover": {
       "model": "file",

@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "packages",
+  "info": {
+    "name": "Package"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string"
+    }
+  }
+}
