@@ -1,4 +1,4 @@
-FROM node:14.15.4-alpine
+FROM node:14.17.0-alpine
 COPY [".", "/usr/src/"]
 WORKDIR /usr/src/
 ENV NODE_ENV=production
