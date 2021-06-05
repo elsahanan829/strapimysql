@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "packages",
+  "collectionName": "containers",
   "info": {
-    "name": "Package",
+    "name": "Container",
     "description": ""
   },
   "options": {
@@ -10,17 +10,15 @@
     "timestamps": true,
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
-    "title": {
+    "Title": {
       "type": "string"
     },
-    "description": {
+    "Description": {
       "type": "text"
     },
-    "url": {
-      "type": "string"
-    },
-    "provider": {
+    "Url": {
       "type": "string"
     },
     "Featured": {
