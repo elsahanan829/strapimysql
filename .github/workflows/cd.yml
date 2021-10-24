@@ -71,3 +71,29 @@ jobs:
           provider: dockerhub
           short_description: 'A strapi project with support for Mongo DB Atlas, Docker, Docker Compose and AWS S3 Bucket.'
           readme_file: 'README.md'
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
+        env:
+          HD_ADMIN_JWT_SECRET: ${{secrets.ADMIN_JWT_SECRET}}
+          HD_AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          HD_AWS_ACCESS_SECRET: ${{secrets.AWS_ACCESS_SECRET}}
+          HD_AWS_BUCKET: ${{secrets.AWS_BUCKET}}
+          HD_AWS_REGION: ${{secrets.AWS_REGION}}
+          HD_DATABASE_HOST: ${{secrets.DATABASE_HOST}}
+          HD_DATABASE_NAME: ${{secrets.DATABASE_NAME}}
+          HD_DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
+          HD_DATABASE_PORT: ${{secrets.DATABASE_PORT}}
+          HD_DATABASE_SRV: ${{secrets.DATABASE_SRV}}
+          HD_DATABASE_SSL: ${{secrets.DATABASE_SSL}}
+          HD_DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
