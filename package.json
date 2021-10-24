@@ -1,6 +1,5 @@
 {
   "name": "strapi",
-  "type": "module",
   "version": "2.0.0",
   "description": "A strapi project with support for MySQL, Digitalocean Spaces, Docker and Docker Compose.",
   "scripts": {
