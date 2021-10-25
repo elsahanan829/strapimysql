@@ -1,9 +1,10 @@
-.git
-.cache
-.github
-.tmp
-build
-docs
-node_modules
+.git/
+.cache/
+.github/
+.tmp/
+build/
+docs/
+node_modules/
 .env
 Dockerfile
+Dockerfile.dev

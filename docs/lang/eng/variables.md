@@ -16,14 +16,14 @@ module.exports = ({ env }) => ({
         port: env.int('DATABASE_PORT', 27017),
         database: env('DATABASE_NAME', 'strapi'),
         username: env('DATABASE_USERNAME', 'user'),
-        password: env('DATABASE_PASSWORD', 'password'),
+        password: env('DATABASE_PASSWORD', 'password')
       },
       options: {
         authenticationDatabase: env('AUTHENTICATION_DATABASE', null),
-        ssl: env.bool('DATABASE_SSL', false),
-      },
-    },
-  },
+        ssl: env.bool('DATABASE_SSL', false)
+      }
+    }
+  }
 })
 ```
 
@@ -35,9 +35,9 @@ module.exports = ({ env }) => ({
   port: env.int('PORT', 1337),
   admin: {
     auth: {
-      secret: env('ADMIN_JWT_SECRET'),
-    },
-  },
+      secret: env('ADMIN_JWT_SECRET')
+    }
+  }
 })
 ```
 

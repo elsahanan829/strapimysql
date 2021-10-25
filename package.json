@@ -1,25 +1,42 @@
 {
   "name": "strapi",
-  "version": "1.2.0",
-  "description": "A Strapi application",
+  "version": "2.0.0",
+  "description": "A strapi project with support for MySQL, Digitalocean Spaces, Docker and Docker Compose.",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.15.8",
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
+    "eslint": "^8.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.4",
+    "prettier": "^2.4.1",
+    "stylelint": "^14.0.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^23.0.0"
+  },
   "dependencies": {
-    "strapi": "3.6.2",
-    "strapi-admin": "3.6.2",
-    "strapi-utils": "3.6.2",
-    "strapi-plugin-content-type-builder": "3.6.2",
-    "strapi-plugin-content-manager": "3.6.2",
-    "strapi-plugin-users-permissions": "3.6.2",
-    "strapi-plugin-email": "3.6.2",
-    "strapi-plugin-upload": "3.6.2",
-    "strapi-connector-mongoose": "3.6.2",
-    "strapi-provider-upload-aws-s3": "3.6.2"
+    "knex": "^0.95.11",
+    "mysql": "2.18.1",
+    "strapi": "3.6.8",
+    "strapi-admin": "3.6.8",
+    "strapi-connector-bookshelf": "3.6.8",
+    "strapi-plugin-content-manager": "3.6.8",
+    "strapi-plugin-content-type-builder": "3.6.8",
+    "strapi-plugin-email": "3.6.8",
+    "strapi-plugin-i18n": "3.6.8",
+    "strapi-plugin-upload": "3.6.8",
+    "strapi-plugin-users-permissions": "3.6.8",
+    "strapi-provider-upload-do": "^3.5.4",
+    "strapi-utils": "3.6.8"
   },
   "author": {
     "name": "luisfalconmx"
@@ -31,5 +48,9 @@
     "node": ">=10.16.0 <=14.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
 }
