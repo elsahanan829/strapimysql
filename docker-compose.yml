@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     restart: always
+    env_file:
+      - .env
     environment:
       - DATABASE_HOST=database
       - DATABASE_PORT=3306
@@ -13,12 +15,6 @@ services:
       - DATABASE_USERNAME=strapi
       - DATABASE_PASSWORD=strapi
       - DATABASE_SSL=false
-      - DO_SPACE_ACCESS_KEY='7TC2I4FZ7WCJ2MQAXRLZ'
-      - DO_SPACE_SECRET_KEY='mIFuQjorkqppu05JwMyXbUjyFr/E/do6cOa1xNMtznw' \
-      - DO_SPACE_ENDPOINT='nyc3.digitaloceanspaces.com' \
-      - DO_SPACE_BUCKET='static-luisfalconmx' \
-      - DO_SPACE_DIRECTORY='strapi' \
-      - DO_SPACE_CDN='cdn.luisfalconmx.com' \
     volumes:
       - .:/usr/src
       - /usr/src/node_modules

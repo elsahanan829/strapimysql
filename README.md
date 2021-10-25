@@ -57,18 +57,24 @@ The following variables are available to configure the project, database, and st
 ### Run the project with the Dockerhub Image
 
 ```
-docker run --name strapi -p 1337:1337 \
+docker run --name strapi -d -p 2336:2336 \
+-e HOST='0.0.0.0' \
+-e PORT='2336' \
+-e URL='http://0.0.0.0:2336' \
+-e ADMIN_URL='http://0.0.0.0:2336/admin' \
+-e ADMIN_JWT_SECRET='' \
 -e DATABASE_HOST= \
--e DATABASE_SRV=true \
--e DATABASE_NAME= \
--e DATABASE_USERNAME= \
--e DATABASE_PASSWORD= \
--e DATABASE_SSL=true \
--e ADMIN_JWT_SECRET= \
--e AWS_ACCESS_KEY_ID= \
--e AWS_ACCESS_SECRET= \
--e AWS_REGION= \
--e AWS_BUCKET= \
+-e DATABASE_PORT=3306 \
+-e DATABASE_NAME='strapi' \
+-e DATABASE_USERNAME='' \
+-e DATABASE_PASSWORD='' \
+-e DATABASE_SSL=false \
+-e DO_SPACE_ACCESS_KEY='' \
+-e DO_SPACE_SECRET_KEY='' \
+-e DO_SPACE_ENDPOINT='' \
+-e DO_SPACE_BUCKET='' \
+-e DO_SPACE_DIRECTORY='' \
+-e DO_SPACE_CDN='' \
 luisfalconmx/strapi:latest
 ```
 
@@ -77,18 +83,24 @@ luisfalconmx/strapi:latest
 ### Run the project with the image from Github Package Registry
 
 ```
-docker run --name strapi -p 1337:1337 \
+docker run --name strapi -d -p 2336:2336 \
+-e HOST='0.0.0.0' \
+-e PORT='2336' \
+-e URL='http://0.0.0.0:2336' \
+-e ADMIN_URL='http://0.0.0.0:2336/admin' \
+-e ADMIN_JWT_SECRET='' \
 -e DATABASE_HOST= \
--e DATABASE_SRV=true \
--e DATABASE_NAME= \
--e DATABASE_USERNAME= \
--e DATABASE_PASSWORD= \
--e DATABASE_SSL=true \
--e ADMIN_JWT_SECRET= \
--e AWS_ACCESS_KEY_ID= \
--e AWS_ACCESS_SECRET= \
--e AWS_REGION= \
--e AWS_BUCKET= \
+-e DATABASE_PORT=3306 \
+-e DATABASE_NAME='strapi' \
+-e DATABASE_USERNAME='' \
+-e DATABASE_PASSWORD='' \
+-e DATABASE_SSL=false \
+-e DO_SPACE_ACCESS_KEY='' \
+-e DO_SPACE_SECRET_KEY='' \
+-e DO_SPACE_ENDPOINT='' \
+-e DO_SPACE_BUCKET='' \
+-e DO_SPACE_DIRECTORY='' \
+-e DO_SPACE_CDN='' \
 ghcr.io/luisfalconmx/strapi:latest
 ```
 
@@ -96,20 +108,7 @@ ghcr.io/luisfalconmx/strapi:latest
 
 ### Run the project with Docker Compose
 
-Create a `.env` file in current directory and pass value to `ADMIN_JWT_SECRET` variable.
-
-Now run `docker-compose up`
-
-<br>
-
-## Requeriments
-
-In order to use the image of this project, the following requirements need to be met.
-
-- [Docker installed on your computer or on your server](https://docs.docker.com/engine/install/)
-- [Docker compose installed on your computer](https://docs.docker.com/compose/install/)
-- [An account on MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-- [An account on AWS](https://aws.amazon.com/)
+This is a simple step, only run the following command: `docker-compose up`
 
 <br>
 
