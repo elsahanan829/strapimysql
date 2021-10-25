@@ -1,15 +1,14 @@
-name: Continuos Integration
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
+name: CI / CD
+on: [push, pull_request, release]
 jobs:
-  test:
-    name: Test
-    runs-on: ubuntu-20.04
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
     strategy:
       fail-fast: false
       matrix:
@@ -30,11 +29,24 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
-  release:
-    name: 'Release'
-    needs: test
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+
+  release:
+    name: Release
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+
+  deploy:
+    name: Deploy
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
