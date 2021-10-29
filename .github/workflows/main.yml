@@ -51,6 +51,9 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Run linters
         run: npm run lint
 
