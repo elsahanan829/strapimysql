@@ -30,23 +30,42 @@ jobs:
         uses: github/codeql-action/analyze@v1
 
   build:
+    # Construir la imagen de docker para correr los comandos despues
+    needs: analyze
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.0'
+          cache: 'npm'
+      - run: npm install
 
   test:
+    # Correr los test necesarios con la imagen de docker obtenida anteriormente
+    needs: build
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Run linters
+        run: npm run lint
 
-  release:
-    name: Release
-    if: github.event_name == 'release'
-    runs-on: ubuntu-latest
-    steps:
+  # release:
+  #   # Si se establecio una nueva version del proyecto, publicar la imagen de docker en dockerhub y en github package registry
+  #   needs: test
+  #   name: Release
+  #   if: github.event_name == 'release'
+  #   runs-on: ubuntu-latest
+  #   steps:
 
-  deploy:
-    name: Deploy
-    if: github.event_name == 'release'
-    runs-on: ubuntu-latest
-    steps:
+  # deploy:
+  #   # Correr un nuevo contenedor con la imagen publicada anteriormente en el servidor de produccion
+  #   needs: relese
+  #   name: Deploy
+  #   if: github.event_name == 'release'
+  #   runs-on: ubuntu-latest
+  #   steps:

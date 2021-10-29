@@ -8,7 +8,8 @@
     "build": "strapi build",
     "strapi": "strapi",
     "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "lint": "eslint --fix"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.15.8",
