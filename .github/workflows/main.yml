@@ -42,8 +42,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.17.0'
-          cache: 'npm'
-      - run: npm install
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm install
 
   test:
     # Correr los test necesarios con la imagen de docker obtenida anteriormente
@@ -53,6 +61,18 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.0'
+
+      - name: Restore node_modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Run linters
         run: npm run lint
