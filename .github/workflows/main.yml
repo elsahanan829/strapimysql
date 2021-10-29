@@ -30,7 +30,6 @@ jobs:
         uses: github/codeql-action/analyze@v1
 
   build:
-    # Construir la imagen de docker para correr los comandos despues
     needs: analyze
     name: Build
     runs-on: ubuntu-latest
@@ -51,15 +50,14 @@ jobs:
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
   test:
-    # Correr los test necesarios con la imagen de docker obtenida anteriormente
     needs: build
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Setup node
@@ -77,13 +75,74 @@ jobs:
       - name: Run linters
         run: npm run lint
 
-  # release:
-  #   # Si se establecio una nueva version del proyecto, publicar la imagen de docker en dockerhub y en github package registry
-  #   needs: test
-  #   name: Release
-  #   if: github.event_name == 'release'
-  #   runs-on: ubuntu-latest
-  #   steps:
+  release:
+    needs: test
+    name: Release
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GITHUB_CONTAINER_REGISTRY_USERNAME }}
+          password: ${{ secrets.GITHUB_CONTAINER_REGISTRY_PASSWORD }}
+
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: |
+            ${{ GITHUB_REPOSITORY }}:latest
+            ${{ GITHUB_REPOSITORY }}:${{ env.RELEASE_VERSION }}
+            ghcr.io/${{ GITHUB_REPOSITORY }}:latest
+            ghcr.io/${{ GITHUB_REPOSITORY }}:${{ env.RELEASE_VERSION }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+      # - name: Set Badge Version
+      #   uses: schneegans/dynamic-badges-action@v1.0.0
+      #   with:
+      #     auth: ${{ secrets.REPOSITORY_TOKEN }}
+      #     gistID: a5061f5a6d416bf2228bedc05f8dfa1b
+      #     filename: docker-badge.json
+      #     label: Dockerhub
+      #     message: ${{ env.RELEASE_VERSION }}
+      #     labelColor: 20232a
+      #     color: 2496ED
+      #     namedLogo: docker
+      #     style: for-the-badge
+
+      - name: Push README to Dockerhub
+        uses: christian-korneck/update-container-description-action@v1
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKERHUB_PASSWORD }}
+        with:
+          destination_container_repo: ${{ GITHUB_REPOSITORY }}
+          provider: dockerhub
+          short_description: 'A strapi project with support for Mongo DB Atlas, Docker, Docker Compose and AWS S3 Bucket.'
+          readme_file: 'README.md'
 
   # deploy:
   #   # Correr un nuevo contenedor con la imagen publicada anteriormente en el servidor de produccion
