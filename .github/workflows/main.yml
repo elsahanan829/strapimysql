@@ -76,7 +76,7 @@ jobs:
   release:
     needs: test
     name: Release
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -90,7 +90,7 @@ jobs:
     # Correr un nuevo contenedor con la imagen publicada anteriormente en el servidor de produccion
     needs: release
     name: Deploy
-    if: github.event.release.action == 'published'
+    if: github.event.release.action == 'released'
     runs-on: ubuntu-latest
     steps:
       - name: Set env
